@@ -11,11 +11,8 @@ type Props = {
 };
 
 export const MoviePosterCard: React.FC<Props> = ({ movie, rank, onClick }) => {
-  const imgPath = movie.poster_path ?? movie.backdrop_path;
-  const imgUrl = imgPath ? getImageUrl(imgPath) : "";
-
   return (
-    <div className="w-54 h-78 shrink-0">
+    <div className={`w-54 min-h-78 shrink-0`} >
       <button
         type="button"
         onClick={() => onClick?.(movie)}
@@ -23,16 +20,12 @@ export const MoviePosterCard: React.FC<Props> = ({ movie, rank, onClick }) => {
       >
         <div className="relative">
           <div className="overflow-hidden rounded-2xl">
-            {imgUrl ? (
               <img
-                src={imgUrl}
+                src={getImageUrl(movie.poster_path ?? '')}
                 alt={movie.title}
                 className="h-72.5 w-full object-cover transition duration-300 group-hover:scale-[1.02]"
                 loading="lazy"
               />
-            ) : (
-              <div className="h-72.5 w-full rounded-2xl bg-white/5" />
-            )}
           </div>
             {
               rank && (<RankBadge value={rank} />)

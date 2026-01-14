@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { getLastMonthsRangeYmd } from "../dateRange";
 import { getMovies } from "../api/getMovies";
 import { movieQueryKeys } from "../queries/queryKeys";
@@ -14,7 +14,7 @@ export const useGetPopularMovies = (page = 1, months = 6) => {
     "release_date.lte": max_date,
   } satisfies Parameters<typeof getMovies>[0];
 
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: movieQueryKeys.list(params),
     queryFn: () => getMovies(params),
     staleTime: 1000 * 60 * 10,

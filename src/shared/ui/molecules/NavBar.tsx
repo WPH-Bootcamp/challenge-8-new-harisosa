@@ -19,7 +19,7 @@ export const Navbar: React.FC<Props> = ({ active = "home", onSearch }) => {
 
   return (
     <>
-      <div className="flex items-center justify-between px-5 py-4 sm:px-10 sm:py-5 lg:px-14">
+      <div className="flex items-center justify-between px-5 py-4 sm:px-10 sm:py-5 lg:px-35">
         <div className="flex items-center gap-6">
           <LogoBrand />
 

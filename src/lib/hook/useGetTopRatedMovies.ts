@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { getMovies } from "../api/getMovies";
 import { movieQueryKeys } from "../queries/queryKeys";
 export type UseGetTopRatedMoviesOptions = {
@@ -30,7 +30,7 @@ export const useGetTopRatedMovies = (opts: UseGetTopRatedMoviesOptions = {}) => 
     include_video,
   } satisfies Parameters<typeof getMovies>[0];
 
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: movieQueryKeys.list(params),
     queryFn: () => getMovies(params),
     staleTime: 1000 * 60 * 10,

@@ -49,7 +49,7 @@ export const TrendingSection: React.FC<Props> = ({
   };
 
   return (
-    <section className="w-full px-10 py-10">
+    <section className="w-full px-10 py-10 lg:px-35">
       <div className="mb-6 flex items-center justify-between">
         <h2 className="text-4xl font-extrabold tracking-tight text-white">
           {title}

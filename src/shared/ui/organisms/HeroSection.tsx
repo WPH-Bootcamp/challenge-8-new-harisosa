@@ -8,7 +8,7 @@ type Props = {
   movies: Movie[];
   intervalMs?: number; // default 20s
   onWatchTrailer?: () => void;
-  onSeeDetail?: () => void;
+  onSeeDetail?: (id: number) => void;
 };
 
 export const HeroSection: React.FC<Props> = ({
@@ -60,12 +60,10 @@ export const HeroSection: React.FC<Props> = ({
         alt={current.title}
         className="absolute inset-0 h-full w-full object-cover"
       />
-
-      {/* overlays */}
       <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-black/85 via-black/35 to-black/10" />
       <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/85 via-black/30 to-black/10" />
 
-      {/* MOBILE: bottom content | DESKTOP: top-left content */}
+
       <div
         className="
           relative z-10 flex h-full
@@ -76,7 +74,6 @@ export const HeroSection: React.FC<Props> = ({
           md:ps-35
         "
       >
-        {/* enable clicks even if you later add pointer-events-none wrapper */}
         <div className="pointer-events-auto w-full md:w-auto">
           <div className="max-w-xl">
             <h1
@@ -99,7 +96,6 @@ export const HeroSection: React.FC<Props> = ({
               {current.overview}
             </p>
 
-            {/* BUTTONS: mobile stack full-width, desktop inline fixed width */}
             <div
               className="
                 mt-8 flex w-full
@@ -123,7 +119,7 @@ export const HeroSection: React.FC<Props> = ({
 
               <Button
                 variant="ghost"
-                onClick={onSeeDetail}
+                onClick={() => onSeeDetail && onSeeDetail(current.id)}
                 className="
                   h-13 w-full rounded-full
                   md:w-57.5 md:rounded-full

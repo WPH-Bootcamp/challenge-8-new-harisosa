@@ -1,6 +1,6 @@
 import * as React from "react";
 
-type IconName = "logo" | "search" | "play" | "close" | "menu";
+export type IconName = "logo" | "search" | "play" | "close" | "menu" | "fav" | "chevron-right" | "chevron-left" | "star" | "video" | "face" | "calendar";
 
 type Props = React.SVGProps<SVGSVGElement> & {
     name: IconName;
@@ -11,9 +11,16 @@ export const Icon: React.FC<Props> = ({ name, className, ...props }) => {
     switch (name) {
         case 'logo': return (<LogoIcon className={className} {...props} />);
         case 'search': return (<SearchIcon className={className} {...props} />);
-        case 'play': return (<PlayIcon className={className} {...props} />)
-        case 'close': return (<CloseIcon className={className} {...props} />)
-        case 'menu': return (<MenuIcon className={className} {...props} />)
+        case 'play': return (<PlayIcon className={className} {...props} />);
+        case 'close': return (<CloseIcon className={className} {...props} />);
+        case 'menu': return (<MenuIcon className={className} {...props} />);
+        case 'fav': return (<FavoriteIcon className={className} {...props} />);
+        case 'chevron-right': return (<ChevronRightIcon className={className} {...props} />);
+        case 'chevron-left': return (<ChevronLeftIcon className={className} {...props} />);
+        case 'star': return (<StarIcon className={className} {...props} />);
+        case 'video': return (<VideoIcon className={className} {...props} />);
+        case 'face': return (<FaceIcon className={className} {...props} />);
+        case 'calendar': return (<CalendarIcon className={className} {...props} />);
     }
 };
 
@@ -54,15 +61,25 @@ const PlayIcon: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...props
 
 const CloseIcon: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
     return (
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
-            <path d="M13 1L1 13M1 1L13 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <svg width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            xmlns="http://www.w3.org/2000/svg"
+            className={className} {...props}>
+            <path d="M13 1L1 13M1 1L13 13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
     )
 }
 
 const MenuIcon: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
     return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+        <svg width="24" height="24" viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
             <path d="M21 7.75H3C2.59 7.75 2.25 7.41 2.25 7C2.25 6.59 2.59 6.25 3 6.25H21C21.41 6.25 21.75 6.59 21.75 7C21.75 7.41 21.41 7.75 21 7.75Z" fill="#FDFDFD" />
             <path d="M21 12.75H3C2.59 12.75 2.25 12.41 2.25 12C2.25 11.59 2.59 11.25 3 11.25H21C21.41 11.25 21.75 11.59 21.75 12C21.75 12.41 21.41 12.75 21 12.75Z" fill="#FDFDFD" />
             <path d="M21 17.75H3C2.59 17.75 2.25 17.41 2.25 17C2.25 16.59 2.59 16.25 3 16.25H21C21.41 16.25 21.75 16.59 21.75 17C21.75 17.41 21.41 17.75 21 17.75Z" fill="#FDFDFD" />
@@ -70,4 +87,126 @@ const MenuIcon: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...props
 
     )
 }
+
+
+const FavoriteIcon: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
+    return (
+        <svg viewBox="0 0 24 24" 
+                    className={className}
+                    
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            {...props}
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.69001C2 5.60001 4.49 3.10001 7.56 3.10001C9.38 3.10001 10.99 3.98001 12 5.34001C13.01 3.98001 14.63 3.10001 16.44 3.10001C19.51 3.10001 22 5.60001 22 8.69001C22 15.69 15.52 19.82 12.62 20.81Z" 
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    )
+}
+
+
+const ChevronRightIcon: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
+    return (
+        <svg width="9" height="14" viewBox="0 0 9 14" fill="none"
+            stroke="currentColor"
+            strokeWidth="2" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+            <path d="M1.16667 12.8334L7 7.00002L1.16667 1.16669" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+
+    )
+}
+
+
+const ChevronLeftIcon: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
+    return (
+        <svg width="9" height="14" viewBox="0 0 9 14"
+            fill="none"
+            stroke="currentColor" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+            <path d="M1.16667 12.8334L7 7.00002L1.16667 1.16669" stroke-linecap="round" stroke-linejoin="round" transform="translate(9 0) scale(-1 1)" />
+        </svg>
+    )
+}
+
+const StarIcon: React.FC<React.SVGProps<SVGSVGElement>> = ({
+    className,
+    ...props
+}) => {
+    return (
+        <svg
+            viewBox="0 0 28 27"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className={className}
+            {...props}
+        >
+            <path
+                d="M12.2289 1.77499C12.8507 0.741682 14.3488 0.741682 14.9707 1.77499L18.0779 6.9382C18.3013 7.30942 18.6657 7.57417 19.0878 7.67192L24.9585 9.03159C26.1334 9.3037 26.5963 10.7284 25.8058 11.6392L21.8555 16.1899C21.5715 16.5171 21.4323 16.9454 21.4697 17.3771L21.9907 23.3806C22.095 24.5821 20.8831 25.4626 19.7726 24.9922L14.2239 22.6415C13.825 22.4725 13.3746 22.4725 12.9756 22.6415L7.42695 24.9922C6.31649 25.4626 5.10452 24.5821 5.20879 23.3806L5.72982 17.3771C5.76728 16.9454 5.62809 16.5171 5.34408 16.1899L1.39378 11.6392C0.603204 10.7284 1.06613 9.3037 2.24104 9.03159L8.11173 7.67192C8.53382 7.57417 8.89821 7.30942 9.12162 6.9382L12.2289 1.77499Z"
+                fill="currentColor"
+                stroke="currentColor"
+                strokeWidth="2"
+            />
+        </svg>
+    );
+};
+
+
+const VideoIcon: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
+    return (
+        <svg viewBox="0 0 32 32" aria-hidden="true"
+            className={className}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            {...props}
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M28.2002 8.22668C27.6535 7.93334 26.5068 7.62668 24.9468 8.72001L22.9868 10.1067C22.8402 5.96001 21.0402 4.33334 16.6668 4.33334H8.66683C4.10683 4.33334 2.3335 6.10668 2.3335 10.6667V21.3333C2.3335 24.4 4.00016 27.6667 8.66683 27.6667H16.6668C21.0402 27.6667 22.8402 26.04 22.9868 21.8933L24.9468 23.28C25.7735 23.8667 26.4935 24.0533 27.0668 24.0533C27.5602 24.0533 27.9468 23.9067 28.2002 23.7733C28.7468 23.4933 29.6668 22.7333 29.6668 20.8267V11.1733C29.6668 9.26668 28.7468 8.50668 28.2002 8.22668ZM14.6668 15.1733C13.2935 15.1733 12.1602 14.0533 12.1602 12.6667C12.1602 11.28 13.2935 10.16 14.6668 10.16C16.0402 10.16 17.1735 11.28 17.1735 12.6667C17.1735 14.0533 16.0402 15.1733 14.6668 15.1733Z" fill="#FDFDFD" />
+        </svg>
+
+
+    )
+}
+
+const FaceIcon: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
+    return (
+        <svg className={className}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            {...props}
+            viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21.5865 2.66666H10.4132C5.55984 2.66666 2.6665 5.55999 2.6665 10.4133V21.5733C2.6665 26.44 5.55984 29.3333 10.4132 29.3333H21.5732C26.4265 29.3333 29.3198 26.44 29.3198 21.5867V10.4133C29.3332 5.55999 26.4398 2.66666 21.5865 2.66666ZM11.3332 8.50666C12.7065 8.50666 13.8398 9.62666 13.8398 11.0133C13.8398 12.4 12.7198 13.52 11.3332 13.52C9.9465 13.52 8.8265 12.3733 8.8265 11C8.8265 9.62666 9.95984 8.50666 11.3332 8.50666ZM15.9998 25.44C12.4132 25.44 9.49317 22.52 9.49317 18.9333C9.49317 18 10.2532 17.2267 11.1865 17.2267H20.7865C21.7198 17.2267 22.4798 17.9867 22.4798 18.9333C22.5065 22.52 19.5865 25.44 15.9998 25.44ZM20.6665 13.4933C19.2932 13.4933 18.1598 12.3733 18.1598 10.9867C18.1598 9.59999 19.2798 8.47999 20.6665 8.47999C22.0532 8.47999 23.1732 9.59999 23.1732 10.9867C23.1732 12.3733 22.0398 13.4933 20.6665 13.4933Z" fill="#FDFDFD" />
+        </svg>
+    )
+}
+
+
+const CalendarIcon: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
+    return (
+        <svg className={className}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            {...props} 
+            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 2V5" stroke="#FDFDFD" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M16 2V5" stroke="#FDFDFD" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M3.5 9.09H20.5" stroke="#FDFDFD" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z" stroke="#FDFDFD" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M15.6947 13.7H15.7037" stroke="#FDFDFD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M15.6947 16.7H15.7037" stroke="#FDFDFD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M11.9955 13.7H12.0045" stroke="#FDFDFD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M11.9955 16.7H12.0045" stroke="#FDFDFD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8.29431 13.7H8.30329" stroke="#FDFDFD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8.29431 16.7H8.30329" stroke="#FDFDFD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    )
+}
+
+
+
+
+
+
+
 

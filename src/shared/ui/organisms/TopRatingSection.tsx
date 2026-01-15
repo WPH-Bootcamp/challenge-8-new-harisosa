@@ -1,17 +1,17 @@
 import { useMemo, useRef, useState, useEffect } from "react";
 import { MoviePosterCard } from "../molecules/MoviePosterCard";
 import type { Movie } from "../../../lib/types/movie";
-import { IconButton } from "../atoms/IconButton";
+import { Chip } from "../atoms/Chip";
+import { Icon } from "../atoms/Icon";
 
-
-type Props = {
+type TopRatingProps = {
   title: string;
   movies: Movie[];
   maxItems?: number;
   onMovieClick?: (m: Movie) => void;
 };
 
-export const TrendingSection: React.FC<Props> = ({
+export const TopRatingSection: React.FC<TopRatingProps> = ({
   title,
   movies,
   maxItems = 10,
@@ -59,16 +59,16 @@ export const TrendingSection: React.FC<Props> = ({
       <div className="relative">
         {canScrollLeft && (
           <div className="absolute left-6 top-1/2 z-20 -translate-y-1/2">
-            <IconButton onClick={() => scrollByCard("left")} aria-label="Previous">
-              <span className="text-2xl leading-none">‹</span>
-            </IconButton>
+            <Chip onClick={() => scrollByCard("left")} aria-label="Previous">
+              <Icon name='chevron-left' className="text-white"/>
+            </Chip>
           </div>
         )}
         {canScrollRight && (
           <div className="absolute right-6 top-1/2 z-20 -translate-y-1/2">
-            <IconButton onClick={() => scrollByCard("right")} aria-label="Next">
-              <span className="text-2xl leading-none">›</span>
-            </IconButton>
+            <Chip onClick={() => scrollByCard("right")} aria-label="Previous">
+              <Icon name='chevron-right' className="text-white"/>
+            </Chip>
           </div>
         )}
 

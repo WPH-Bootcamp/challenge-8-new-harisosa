@@ -1,19 +1,49 @@
 import type { GetMoviesParams } from "../api/getMovies";
 
+const MOVIE_ROOT = ["movie"] as const;
+const ACCOUNT_ROOT = ["account"] as const;
 
 export const movieQueryKeys = {
-  root: ["movie"] as const,
+  // ===== ACCOUNT =====
+  account: {
+    all: ACCOUNT_ROOT,
+  },
 
-  /**
-   * Untuk useQuery biasa (page ikut cache key)
-   * Contoh: page 1 vs page 2 beda cache.
-   */
-  list: (params: GetMoviesParams) => [...movieQueryKeys.root, "list", params] as const,
+  // ===== MOVIE ROOT =====
+  root: MOVIE_ROOT,
 
-  /**
-   * Untuk useInfiniteQuery (page JANGAN ikut key)
-   * Karena pagination di-handle sama pageParam.
-   */
+  // ===== MOVIE LIST =====
+  list: (params: GetMoviesParams) =>
+    [...MOVIE_ROOT, "list", params] as const,
+
+  tranding: [...MOVIE_ROOT, "tranding"] as const,
+
   infinite: (params: Omit<GetMoviesParams, "page">) =>
-    [...movieQueryKeys.root, "infinite", params] as const,
-};
+    [...MOVIE_ROOT, "infinite", params] as const,
+
+  // ===== MOVIE DETAIL =====
+  detail: (movieId: number) =>
+    [...MOVIE_ROOT, "detail", movieId] as const,
+
+  // ===== CREDITS =====
+  creditByMovieId: (movieId: number) =>
+    [...MOVIE_ROOT, "credit", movieId] as const,
+
+  // ===== TRAILER =====
+  trailer: {
+    all: [...MOVIE_ROOT, "trailer"] as const,
+    byMovieId: (movieId: number) =>
+      [...MOVIE_ROOT, "trailer", movieId] as const,
+  },
+
+  // ===== FAVORITES =====
+  favorite: {
+    all: [...MOVIE_ROOT, "favorite"] as const,
+
+    movies: (accountId: number) =>
+      [...MOVIE_ROOT, "favorite", "movies", accountId] as const,
+
+    moviesByPage: (accountId: number, page: number) =>
+      [...MOVIE_ROOT, "favorite", "movies", accountId, page] as const,
+  },
+} as const;

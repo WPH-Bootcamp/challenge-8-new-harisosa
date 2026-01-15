@@ -4,11 +4,11 @@ export const HeroSkeleton: React.FC = () => {
   return (
     <section className="relative px-10 pt-10">
       {/* Background / Poster besar */}
-      <div className="relative h-[420px] w-full overflow-hidden rounded-3xl bg-white/5">
+      <div className="relative h-105 w-full overflow-hidden rounded-3xl bg-white/5">
         <Skeleton className="absolute inset-0" />
 
         {/* Gradient overlay (biar kelihatan cinematic seperti hero kamu) */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
       </div>
 
       {/* Content (judul, deskripsi, tombol) */}

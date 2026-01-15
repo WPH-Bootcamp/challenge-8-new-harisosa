@@ -1,25 +1,36 @@
 import React, { Suspense } from "react";
 import { useGetPopularMovies } from "../lib/hook/useGetPolularMovies";
-import { useGetTopRatedMovies } from "../lib/hook/useGetTopRatedMovies";
 import { HeroSection } from "../shared/ui/organisms/HeroSection";
-import { TrendingSection } from "../shared/ui/organisms/TrandingSection";
+import { TopRatingSection } from "../shared/ui/organisms/TopRatingSection";
 import { ErrorBoundary } from "../shared/ui/atoms/ErrorBoundary";
-import { TrandingSectionSkeleton } from "../shared/ui/organisms/TrandingSkeleton";
+import { TopRatingSectionSkeleton } from "../shared/ui/organisms/TopRatingSkeleton";
 import { HeroSkeleton } from "../shared/ui/organisms/HeroSkeleton";
 import { useGetNowPlayingMovies } from "../lib/hook/useGetNowPlayingMovies";
 import { NowPlayingSection } from "../shared/ui/organisms/NowPlayingSection";
+import { useNavigate } from "react-router-dom";
+import type { Movie } from "../lib/types/movie";
+import { useGetTrandingMovies } from "../lib/hook/useGetTrandingMovies";
 
-function HeroBlock() {
+
+export const HomePage : React.FC = () => {
+
+   const navigate = useNavigate();
+
+  const openMovieDetail = (movieId: number) => {
+    navigate(`/movie/${movieId}`);
+  };
+
+  const HeroBlock = () => {
   const { data } = useGetPopularMovies(1);
-  return <HeroSection movies={data?.results ?? []} intervalMs={20_000} />;
+  return <HeroSection onSeeDetail={(id: number) => {openMovieDetail(id)}} movies={data?.results ?? []} intervalMs={20_000} />;
 }
 
-function TopRatedBlock() {
-  const { data } = useGetTopRatedMovies({ page: 1 });
-  return <TrendingSection title="Top Rated" movies={data?.results ?? []} />;
+const TopRatedBlock = () => {
+  const { data } = useGetTrandingMovies();
+  return <TopRatingSection onMovieClick={(movie: Movie) => openMovieDetail(movie.id)} title="Top Rated" movies={data?.results ?? []} />;
 }
 
-function NowPlayingBlock() {
+const NowPlayingBlock = () => {
   const {
     data,
     fetchNextPage,
@@ -45,8 +56,6 @@ function NowPlayingBlock() {
     />
   );
 }
-
-export const HomePage = () => {
   return (
     <div className="mx-auto">
 
@@ -58,17 +67,17 @@ export const HomePage = () => {
         </Suspense>
       </ErrorBoundary>
 
-      <ErrorBoundary fallback={<TrandingSectionSkeleton title="Top Rated" count={10} showLoadMore />}>
+      <ErrorBoundary fallback={<TopRatingSectionSkeleton title="Top Rated" count={10} showLoadMore />}>
         <Suspense
-          fallback={<TrandingSectionSkeleton title="Top Rated" count={10} showLoadMore />}
+          fallback={<TopRatingSectionSkeleton title="Top Rated" count={10} showLoadMore />}
         >
           <TopRatedBlock />
         </Suspense>
       </ErrorBoundary>
 
-      <ErrorBoundary fallback={<div className="px-10 text-white">Now Playing Error</div>}>
+      <ErrorBoundary fallback={<TopRatingSectionSkeleton title="Now Playing" count={10} showLoadMore />}>
         <Suspense
-          fallback={<TrandingSectionSkeleton title="Now Playing" count={10} showLoadMore />}
+          fallback={<TopRatingSectionSkeleton title="Now Playing" count={10} showLoadMore />}
         >
           <NowPlayingBlock />
         </Suspense>

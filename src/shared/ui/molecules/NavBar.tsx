@@ -27,7 +27,7 @@ export const Navbar: React.FC<Props> = ({ active = "home", onSearch }) => {
             <ul className="flex items-center gap-8">
               <li>
                 <a
-                  href="#"
+                  href="/"
                   className={active === "home" ? linkActive : linkBase}
                 >
                   Home

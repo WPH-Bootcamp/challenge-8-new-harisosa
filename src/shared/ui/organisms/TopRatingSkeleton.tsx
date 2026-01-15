@@ -8,7 +8,7 @@ type Props = {
   showLoadMore?: boolean;
 };
 
-export const TrandingSectionSkeleton: React.FC<Props> = ({
+export const TopRatingSectionSkeleton: React.FC<Props> = ({
   title,
   count = 10,
   showRank = false,

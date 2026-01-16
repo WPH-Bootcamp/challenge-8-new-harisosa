@@ -1,0 +1,64 @@
+import React, { useState } from "react";
+import { useFavoriteMovies } from "../lib/hook/useGetFavoritesMovie";
+import { useAuth } from "../lib/hook/useAuth";
+import { useToggleFavorite } from "../lib/hook/useToogleFavorite";
+import { useMovieTrailer } from "../lib/hook/useGetMovieTrailer";
+import { FavoritesList } from "../shared/ui/organisms/FavoriteList";
+import { TrailerModal } from "../shared/ui/organisms/TrailerModel";
+import { getImageUrl } from "../lib/api/getImage";
+
+export const FavoritesPage: React.FC = () => {
+    const { accountId } = useAuth();
+    const favQ = useFavoriteMovies(accountId ?? 0);
+    const toggleFav = useToggleFavorite();
+    const movies = favQ.data?.results ?? [];
+    const [openTrailer, setOpenTrailer] = useState(false);
+    const [trailerMovieId, setTrailerMovieId] = useState<number | null>(null);
+
+    const trailerQ = useMovieTrailer(trailerMovieId ?? 0);
+
+    const onWatchTrailer = (movieId: number) => {
+        setTrailerMovieId(movieId);
+        setOpenTrailer(true);
+    };
+
+    const onToggleFavorite = (movieId: number) => {
+        toggleFav.mutate({ movieId, nextFavorite: false });
+    };
+
+    return (
+        <div className="min-h-dvh lg:pt-38.5 lg:px-35">
+            <div className="w-full max-w-5xl px-4 sm:px-6 md:px-8 pt-10">
+                <h1 className="text-2xl font-extrabold text-white">Favorites</h1>
+            </div>
+
+            {favQ.isLoading ? (
+                <div className=" max-w-5xl px-4 sm:px-6 md:px-8 py-10 text-white/60">
+                    Loading...
+                </div>
+            ) : favQ.isError ? (
+                <div className="max-w-5xl px-4 sm:px-6 md:px-8 py-10 text-white/60">
+                    Failed to load favorites.
+                </div>
+            ) : !favQ.data?.results.length ? (
+                <div className="max-w-5xl px-4 sm:px-6 md:px-8 py-10 text-white/60">
+                    No favorites yet.
+                </div>
+            ) : (
+                <FavoritesList
+                    items={movies}
+                    getPosterUrl={(m) => getImageUrl(m.poster_path ?? '')}
+                    onWatchTrailer={onWatchTrailer}
+                    onToggleFavorite={onToggleFavorite}
+                />
+            )}
+
+            <TrailerModal
+                open={openTrailer}
+                onClose={() => setOpenTrailer(false)}
+                videoId={trailerQ.data ?? null}
+                isLoading={trailerQ.isLoading}
+            />
+        </div>
+    );
+};

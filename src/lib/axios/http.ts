@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-export const api = axios.create({
+export const http = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
 });
 
-api.interceptors.request.use((config) => {
+http.interceptors.request.use((config) => {
   const token = import.meta.env.VITE_READ_ACCESS_TOKEN;
 
   if (token) {

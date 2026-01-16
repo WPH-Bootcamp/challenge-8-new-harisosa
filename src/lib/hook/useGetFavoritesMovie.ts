@@ -3,9 +3,9 @@ import { movieQueryKeys } from "../queries/queryKeys";
 import { getFavoriteMovies } from "../api/getFavorites";
 
 
-export const useFavoriteMovies = (accountId: number, page?: number) => {
+export const useFavoriteMovies = (accountId: number) => {
   return useQuery({
-    queryKey: [...movieQueryKeys.favorite.movies(accountId), page] as const,
+    queryKey: [...movieQueryKeys.favorite.movies(accountId)] as const,
     queryFn: async () => {
       const res = await getFavoriteMovies(accountId);
       return res.data;

@@ -41,9 +41,14 @@ export const movieQueryKeys = {
     all: [...MOVIE_ROOT, "favorite"] as const,
 
     movies: (accountId: number) =>
-      [...MOVIE_ROOT, "favorite", "movies", accountId] as const,
+      [...movieQueryKeys.favorites.all, accountId] as const,
 
     moviesByPage: (accountId: number, page: number) =>
-      [...MOVIE_ROOT, "favorite", "movies", accountId, page] as const,
+      [...movieQueryKeys.favorites.all,  accountId, page] as const,
+  },
+
+    favorites: {
+    all: ["favorites"] as const,
+    
   },
 } as const;

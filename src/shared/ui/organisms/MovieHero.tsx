@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon } from "../atoms/Icon";
 import { PosterCard } from "../molecules/PosterCard";
-import { PrimaryActions } from "../molecules/PrimaryAction";
+import { PrimaryActions } from "./PrimaryAction";
 import { MovieMetaCards } from "./MovieMetaCard";
 
 type MovieHeroProps = {
@@ -40,24 +40,25 @@ export const MovieHero: React.FC<MovieHeroProps> = ({
         style={{ backgroundImage: `url(${backdropUrl})` }}
       />
 
-      <div className="absolute inset-0 bg-[radial-gradient(70%_70%_at_50%_40%,rgba(0,0,0,0.25),rgba(0,0,0,0.85))]" />
+      <div className="absolute inset-0" />
       <div
         className="
     relative z-10
-    px-4 sm:px-6 md:px-10
-    pb-4
-    pt-[clamp(2.5rem,10vh,6.5rem)]
+      lg:px-35 lg:pt-103
+      px-4
+      pt-55.5
   "
       >
         <div
           className="
       grid gap-x-6 gap-y-4
+
       grid-cols-[auto_1fr]
       md:grid-cols-[clamp(10rem,18vw,16rem)_minmax(0,1fr)]
       md:items-start
     "
         >
-          <div className="md:row-span-3">
+          <div className="md:row-span-3 lg:w-65 lg:h-87 w-29 h-42.75">
             <PosterCard src={posterUrl} alt={title} />
           </div>
 

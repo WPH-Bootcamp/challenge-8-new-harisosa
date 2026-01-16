@@ -28,7 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/favorite"
                 >
                   Favorites
                 </a>
@@ -143,7 +143,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/favorite"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Favorites

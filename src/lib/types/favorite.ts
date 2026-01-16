@@ -7,6 +7,7 @@ export type FavoriteMovieItem = {
   backdrop_path: string | null;
   release_date: string;
   vote_average: number;
+  overview: string;
 };
 
 export type FavoriteMoviesResponse = ListResponse<FavoriteMovieItem>;

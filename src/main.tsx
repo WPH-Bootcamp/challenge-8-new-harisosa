@@ -7,7 +7,7 @@ import { Toaster } from 'sonner';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { router } from './config/routes';
 import { queryClient } from './lib/queries/queryClient';
-import { AuthProvider } from './provider/AuthProvider';
+import { AuthProvider } from './providers/AuthProvider';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

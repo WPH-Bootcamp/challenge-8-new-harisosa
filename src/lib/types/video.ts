@@ -5,6 +5,7 @@ export type Video = {
   type: string;
   official: boolean;
   published_at: string;
+  name: string;
 };
 
 export type VideosResponse = {

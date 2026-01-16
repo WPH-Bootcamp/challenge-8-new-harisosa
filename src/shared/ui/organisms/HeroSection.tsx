@@ -7,7 +7,7 @@ import { Icon } from "../atoms/Icon";
 type Props = {
   movies: Movie[];
   intervalMs?: number; // default 20s
-  onWatchTrailer?: () => void;
+  onWatchTrailer?: (id: number) => void;
   onSeeDetail?: (id: number) => void;
 };
 
@@ -105,7 +105,7 @@ export const HeroSection: React.FC<Props> = ({
             >
               <Button
                 variant="primary"
-                onClick={onWatchTrailer}
+                onClick={() => onWatchTrailer && onWatchTrailer(current.id)}
                 className="
                   h-13 w-full rounded-full text-md
                   md:w-57.5 md:rounded-full

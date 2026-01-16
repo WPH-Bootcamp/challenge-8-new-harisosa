@@ -1,25 +1,29 @@
 import { useQuery } from "@tanstack/react-query";
 import { getVideo } from "../api/getVideo";
 import { movieQueryKeys } from "../queries/queryKeys";
+import type { Video } from "../types/video";
 
-export function useMovieTrailer(movieId: number) {
+export const useMovieTrailer = (movieId: number) => {
   return useQuery({
-    queryKey: movieQueryKeys.trailer.all,
+    queryKey: [...movieQueryKeys.trailer.all, movieId],
+    enabled: movieId > 0,
     queryFn: async () => {
       const data = await getVideo(movieId);
 
-      const trailer = data.results
-        .filter(v => v.site === "YouTube")
+      const youtube = data.results.filter(
+        (v: Video) => v.site === "YouTube" && !!v.key
+      );
+
+      const picked = youtube
         .sort((a, b) => {
-          if (a.type === "Trailer" && b.type !== "Trailer") return -1;
-          if (a.type !== "Trailer" && b.type === "Trailer") return 1;
-          return Number(b.official) - Number(a.official);
+          const score = (v: Video) =>
+            (v.type === "Trailer" ? 100 : 0) +
+            (v.official ? 10 : 0) +
+            (v.name?.toLowerCase().includes("official") ? 5 : 0);
+          return score(b) - score(a);
         })[0];
 
-      return trailer
-        ? `https://www.youtube.com/watch?v=${trailer.key}`
-        : null;
+      return picked?.key?.trim() ?? null;
     },
-    enabled: !!movieId,
   });
-}
+};

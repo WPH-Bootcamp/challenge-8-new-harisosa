@@ -9,7 +9,7 @@ type Props = {
 
 export const MovieMetaCards: React.FC<Props> = ({ ratingText, genreText, ageLimitText }) => {
   return (
-    <div className="mt-5 grid grid-cols-3 gap-3.5">
+    <div className="mt-5 grid grid-cols-3 gap-3">
       <MetaCard iconName="star" label="Rating" value={ratingText} iconClassName="text-yellow-400" />
       <MetaCard iconName="video" label="Genre" value={genreText} />
       <MetaCard iconName="face" label="Age limit" value={ageLimitText} />

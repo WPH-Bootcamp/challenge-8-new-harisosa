@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useMovieDetail } from "../lib/hook/useGetMovieDetail";
 import { useMovieCredits } from "../lib/hook/useGetMovieCredit";
@@ -10,6 +10,7 @@ import { useMovieTrailer } from "../lib/hook/useGetMovieTrailer";
 import { useAuth } from "../lib/hook/useAuth";
 import { useFavoriteIds } from "../lib/hook/useGetFavoriteById";
 import { useToggleFavorite } from "../lib/hook/useToogleFavorite";
+import { TrailerModal } from "../shared/ui/organisms/TrailerModel";
 
 function formatDateId(dateStr: string) {
   const d = new Date(dateStr);
@@ -23,6 +24,16 @@ function formatDateId(dateStr: string) {
 }
 
 export const MovieDetailPage: React.FC = () => {
+    const [openTrailer, setOpenTrailer] = useState(false);
+    const [trailerMovieId, setTrailerMovieId] = useState<number | null>(null);
+  
+    const trailerQ = useMovieTrailer(trailerMovieId ?? 0);
+  
+    const watchTrailer = (movieId: number) => {
+      setTrailerMovieId(movieId);
+      setOpenTrailer(true);
+    };
+
   const params = useParams();
   const { accountId } = useAuth();
   const movieId = Number(params.movieId);
@@ -55,7 +66,7 @@ export const MovieDetailPage: React.FC = () => {
       ratingText,
       genreText,
       ageLimitText,
-      onWatchTrailer: () => trailerUrl && window.open(trailerUrl, "_blank"),
+      onWatchTrailer: () => watchTrailer(movieId),
       onToggleFavorite: () => toggleFav.mutate({ movieId: movieId, nextFavorite: !isFavorite }),
       trailer: trailerUrl,
       isFavorite
@@ -87,10 +98,10 @@ export const MovieDetailPage: React.FC = () => {
     <>
       <MovieHero {...view.hero} />
 
-      <div className="pb-2 pt-7 px-35">
+      <div className="pb-2 pt-7 lg:px-35 px-4">
         <section>
-          <h2 className="m-0 text-4xl font-bold text-white">Overview</h2>
-          <p className="mt-2 text-lg max-w-245 leading-[1.6] text-white/75">{view.overview}</p>
+          <h2 className="m-0 lg:text-4xl text-md font-bold text-white">Overview</h2>
+          <p className="mt-2 lg:text-lg text-sm max-w-245 leading-[1.6] text-white/75">{view.overview}</p>
         </section>
 
         <div className="my-6">
@@ -99,6 +110,13 @@ export const MovieDetailPage: React.FC = () => {
 
         <CastCrewSection people={view.people} />
       </div>
+
+            <TrailerModal
+              open={openTrailer}
+              onClose={() => setOpenTrailer(false)}
+              videoId={trailerQ.data ?? null}
+              isLoading={trailerQ.isLoading}
+            />
     </>
   )
 };

@@ -1,6 +1,6 @@
 // src/features/auth/useAuth.ts
 import { useContext } from "react";
-import { AuthContext } from "../../provider/AuthContext";
+import { AuthContext } from "../../providers/AuthContext";
 
 
 export function useAuth() {

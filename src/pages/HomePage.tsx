@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import { useGetPopularMovies } from "../lib/hook/useGetPolularMovies";
 import { HeroSection } from "../shared/ui/organisms/HeroSection";
 import { TopRatingSection } from "../shared/ui/organisms/TopRatingSection";
@@ -10,52 +10,62 @@ import { NowPlayingSection } from "../shared/ui/organisms/NowPlayingSection";
 import { useNavigate } from "react-router-dom";
 import type { Movie } from "../lib/types/movie";
 import { useGetTrandingMovies } from "../lib/hook/useGetTrandingMovies";
+import { useMovieTrailer } from "../lib/hook/useGetMovieTrailer";
+import { TrailerModal } from "../shared/ui/organisms/TrailerModel";
 
 
-export const HomePage : React.FC = () => {
-
-   const navigate = useNavigate();
+export const HomePage: React.FC = () => {
+  const navigate = useNavigate();
 
   const openMovieDetail = (movieId: number) => {
     navigate(`/movie/${movieId}`);
   };
+  const [openTrailer, setOpenTrailer] = useState(false);
+  const [trailerMovieId, setTrailerMovieId] = useState<number | null>(null);
+
+  const trailerQ = useMovieTrailer(trailerMovieId ?? 0);
+
+  const watchTrailer = (movieId: number) => {
+    setTrailerMovieId(movieId);
+    setOpenTrailer(true);
+  };
 
   const HeroBlock = () => {
-  const { data } = useGetPopularMovies(1);
-  return <HeroSection onSeeDetail={(id: number) => {openMovieDetail(id)}} movies={data?.results ?? []} intervalMs={20_000} />;
-}
+    const { data } = useGetPopularMovies(1);
+    return <HeroSection onWatchTrailer={(id: number) => watchTrailer(id)} onSeeDetail={(id: number) => { openMovieDetail(id) }} movies={data?.results ?? []} intervalMs={20_000} />;
+  }
 
-const TopRatedBlock = () => {
-  const { data } = useGetTrandingMovies();
-  return <TopRatingSection onMovieClick={(movie: Movie) => openMovieDetail(movie.id)} title="Top Rated" movies={data?.results ?? []} />;
-}
+  const TopRatedBlock = () => {
+    const { data } = useGetTrandingMovies();
+    return <TopRatingSection onMovieClick={(movie: Movie) => openMovieDetail(movie.id)} title="Top Rated" movies={data?.results ?? []} />;
+  }
 
-const NowPlayingBlock = () => {
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useGetNowPlayingMovies();
+  const NowPlayingBlock = () => {
+    const {
+      data,
+      fetchNextPage,
+      hasNextPage,
+      isFetchingNextPage,
+    } = useGetNowPlayingMovies();
 
-  const all = data.pages.flatMap((p) => p.results);
+    const all = data.pages.flatMap((p) => p.results);
 
-  const movies = Array.from(
-    new Map(
-      all
-        .filter((m) => m.poster_path)
-        .map((m) => [m.id, m])
-    ).values()
-  );
-  return (
-    <NowPlayingSection
-      movies={movies}
-      hasMore={hasNextPage}
-      isLoadingMore={isFetchingNextPage}
-      onLoadMore={() => fetchNextPage()}
-    />
-  );
-}
+    const movies = Array.from(
+      new Map(
+        all
+          .filter((m) => m.poster_path)
+          .map((m) => [m.id, m])
+      ).values()
+    );
+    return (
+      <NowPlayingSection
+        movies={movies}
+        hasMore={hasNextPage}
+        isLoadingMore={isFetchingNextPage}
+        onLoadMore={() => fetchNextPage()}
+      />
+    );
+  }
   return (
     <div className="mx-auto">
 
@@ -82,6 +92,12 @@ const NowPlayingBlock = () => {
           <NowPlayingBlock />
         </Suspense>
       </ErrorBoundary>
+      <TrailerModal
+        open={openTrailer}
+        onClose={() => setOpenTrailer(false)}
+        videoId={trailerQ.data ?? null}
+        isLoading={trailerQ.isLoading}
+      />
     </div>
   );
 };

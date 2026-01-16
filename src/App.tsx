@@ -22,7 +22,7 @@ export default function App() {
           ? "bg-black/60 backdrop-blur-md border-b border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
           : "bg-transparent border-b border-transparent")
       }>
-        <Navbar active="home" />
+        <Navbar/>
       </header>
 
       <main>

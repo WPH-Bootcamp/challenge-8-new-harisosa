@@ -1,14 +1,14 @@
 import React from "react";
 
-type Props = {
+type PosterCardProps = {
   src: string;
   alt: string;
 };
 
-export const PosterCard: React.FC<Props> = ({ src, alt }) => {
+export const PosterCard: React.FC<PosterCardProps> = ({ src, alt }) => {
   return (
-    <div className="w-65 h-87 overflow-hidden">
-      <img className="block h-auto w-full" src={src} alt={alt} loading="lazy" />
+    <div className="lg:w-65 lg:h-87 w-29 h-42.75 overflow-hidden">
+      <img className="block h-full w-full" src={src} alt={alt} loading="lazy" />
     </div>
   );
 };

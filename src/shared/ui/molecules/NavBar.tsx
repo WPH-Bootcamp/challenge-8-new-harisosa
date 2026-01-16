@@ -3,19 +3,13 @@ import { LogoBrand } from "./LogoBrand";
 import { SearchInput } from "../atoms/SearchInput";
 import { Icon } from "../atoms/Icon";
 
-type Props = {
-  active?: "home" | "favorites";
+type NavbarProps = {
   onSearch?: (value: string) => void;
 };
 
-export const Navbar: React.FC<Props> = ({ active = "home", onSearch }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const linkBase =
-    "text-white/70 hover:text-white transition font-medium";
-  const linkActive =
-    "text-white font-semibold";
 
   return (
     <>
@@ -28,7 +22,6 @@ export const Navbar: React.FC<Props> = ({ active = "home", onSearch }) => {
               <li>
                 <a
                   href="/"
-                  className={active === "home" ? linkActive : linkBase}
                 >
                   Home
                 </a>
@@ -36,7 +29,6 @@ export const Navbar: React.FC<Props> = ({ active = "home", onSearch }) => {
               <li>
                 <a
                   href="#"
-                  className={active === "favorites" ? linkActive : linkBase}
                 >
                   Favorites
                 </a>
@@ -143,8 +135,7 @@ export const Navbar: React.FC<Props> = ({ active = "home", onSearch }) => {
               <ul className="flex flex-col gap-4">
                 <li>
                   <a
-                    href="#"
-                    className={active === "home" ? linkActive : linkBase}
+                    href="/"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Home
@@ -153,7 +144,6 @@ export const Navbar: React.FC<Props> = ({ active = "home", onSearch }) => {
                 <li>
                   <a
                     href="#"
-                    className={active === "favorites" ? linkActive : linkBase}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Favorites

@@ -10,7 +10,7 @@ type Props = {
 
 export const MetaCard: React.FC<Props> = ({ iconName, label, value, iconClassName }) => {
   return (
-    <div className="rounded-[14px] border border-white/10 bg-black/45 px-4 py-4.5 text-center w-69">
+    <div className="rounded-[14px] border border-white/10 bg-black/45 px-4 py-4.5 text-center lg:w-69">
       <div className="mb-2 flex justify-center opacity-90 ">
         <Icon name={iconName} className={`${iconClassName} w-7.5`}  />
       </div>

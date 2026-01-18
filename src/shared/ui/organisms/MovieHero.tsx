@@ -34,9 +34,9 @@ export const MovieHero: React.FC<MovieHeroProps> = ({
   trailer,
 }) => {
   return (
-    <section className="relative overflow-hidden rounded-[18px]">
+    <section className="relative overflow-hidden">
       <div
-        className="absolute inset-0 scale-105 bg-cover bg-center blur-[2px]"
+        className="absolute inset-0 scale-105 bg-cover bg-center lg:h-185 h-86.25"
         style={{ backgroundImage: `url(${backdropUrl})` }}
       />
 
@@ -54,7 +54,6 @@ export const MovieHero: React.FC<MovieHeroProps> = ({
       grid gap-x-6 gap-y-4
 
       grid-cols-[auto_1fr]
-      md:grid-cols-[clamp(10rem,18vw,16rem)_minmax(0,1fr)]
       md:items-start
     "
         >

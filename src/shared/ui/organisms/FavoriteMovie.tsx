@@ -4,7 +4,6 @@ import { FavoriteToggleButton } from "../molecules/FavoriteToggleButton";
 import { TrailerButton } from "../molecules/TrailerButton";
 import { RatingInline } from "../molecules/RatingInline";
 
-
 type FavoriteMovieProps = {
   posterUrl: string;
   title: string;
@@ -29,11 +28,11 @@ export const FavoriteMovie: React.FC<FavoriteMovieProps> = ({
 }) => {
   return (
     <div className="py-6">
+      {/* Row utama */}
       <div className="flex items-start gap-4 sm:gap-6">
-        <div className="lg: w-45.5 lg:h-67.5">
+        <div className="shrink-0 w-26 sm:w-35">
           <PosterCard src={posterUrl} alt={title} />
         </div>
-
 
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-3">
@@ -44,8 +43,11 @@ export const FavoriteMovie: React.FC<FavoriteMovieProps> = ({
               <RatingInline text={ratingText} />
             </div>
 
-            <div className="shrink-0">
-              <FavoriteToggleButton isFavorite={isFavorite} onToggle={onToggleFavorite} />
+            <div className="hidden sm:block shrink-0">
+              <FavoriteToggleButton
+                isFavorite={isFavorite}
+                onToggle={onToggleFavorite}
+              />
             </div>
           </div>
 
@@ -53,9 +55,27 @@ export const FavoriteMovie: React.FC<FavoriteMovieProps> = ({
             {overview}
           </p>
 
-          <div className="mt-4">
+          <div className="hidden sm:block mt-4">
             <TrailerButton onClick={onWatchTrailer} disabled={disableTrailer} />
           </div>
+        </div>
+      </div>
+
+      <div className="mt-4 flex items-center gap-3 sm:hidden">
+        <div className="min-w-0 flex-1">
+          <TrailerButton
+            onClick={onWatchTrailer}
+            disabled={disableTrailer}
+            className="w-full"
+          />
+        </div>
+
+        <div className="shrink-0">
+          <FavoriteToggleButton
+            isFavorite={isFavorite}
+            onToggle={onToggleFavorite}
+            className="h-10 w-10 rounded-full"
+          />
         </div>
       </div>
 

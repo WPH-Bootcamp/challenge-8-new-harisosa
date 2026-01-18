@@ -63,6 +63,7 @@ export const HomePage: React.FC = () => {
         hasMore={hasNextPage}
         isLoadingMore={isFetchingNextPage}
         onLoadMore={() => fetchNextPage()}
+        onClickMovie={(movie: Movie) => openMovieDetail(movie.id)}
       />
     );
   }

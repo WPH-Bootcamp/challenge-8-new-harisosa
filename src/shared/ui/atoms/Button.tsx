@@ -1,6 +1,6 @@
 import * as React from "react";
 
-type Variant = "primary" | "ghost" | "custom";
+type Variant = "primary" | "ghost" | "custom" | "icon";
 
 type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: Variant;
@@ -18,7 +18,8 @@ export const Button: React.FC<Props> = ({
     primary: "bg-(--button-primary) text-white hover:brightness-110 px-6 py-3",
     ghost:
       "bg-white/5 text-white hover:bg-white/10 ring-1 ring-white/10 px-6 py-3",
-      custom:""
+      custom:"",
+      icon:"bg-white/5 text-white hover:bg-white/10 ring-1 ring-white/10"
   };
 
   return <button className={`${base} ${variants[variant]} ${className}`} {...props} />;

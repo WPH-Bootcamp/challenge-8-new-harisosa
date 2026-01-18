@@ -1,53 +1,70 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { LogoBrand } from "./LogoBrand";
 import { SearchInput } from "../atoms/SearchInput";
 import { Icon } from "../atoms/Icon";
+import { useNavigate } from "react-router-dom";
 
-type NavbarProps = {
-  onSearch?: (value: string) => void;
-};
+type NavItem = { label: string; href: string };
 
-export const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
+export const Navbar: React.FC = () => {
+  const navigate = useNavigate();
+  const navItems: NavItem[] = useMemo(
+    () => [
+      { label: "Home", href: "/" },
+      { label: "Favorites", href: "/favorite" },
+    ],
+    []
+  );
+
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [querySearch, setQuerySearch] = useState("");
+
+  const goToSearch = () => {
+    const q = querySearch.trim();
+    if (!q) return;
+    navigate(`/search?query=${encodeURIComponent(q)}`);
+  };
 
   return (
     <>
-      <div className="flex items-center justify-between px-5 py-4 sm:px-10 sm:py-5 lg:px-35">
+      <div className="flex items-center justify-between px-5 py-4 sm:px-10 sm:py-5 lg:px-35 h-full">
         <div className="flex items-center gap-6">
           <LogoBrand />
 
           <nav className="hidden md:block" aria-label="Main navigation">
             <ul className="flex items-center gap-8">
-              <li>
-                <a
-                  href="/"
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/favorite"
-                >
-                  Favorites
-                </a>
-              </li>
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <a
+                    href={item.href}
+                    className="text-white/80 hover:text-white"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </nav>
         </div>
 
-        {/* Right */}
         <div className="flex items-center gap-3">
-          {/* Desktop search */}
+
           <div className="hidden w-[320px] md:block">
             <SearchInput
-              placeholder="Search Movie"
-              onChange={(e) => onSearch?.(e.target.value)}
+              placeholder="Search movie"
+              value={querySearch}
+              onChange={(e) => setQuerySearch(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  goToSearch();
+                }
+              }}
             />
+
           </div>
 
-          {/* Mobile: search icon */}
           <button
             type="button"
             onClick={() => setIsSearchOpen(true)}
@@ -72,13 +89,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
             onClick={() => setIsMenuOpen(true)}
             className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white/80 hover:bg-white/10 hover:text-white md:hidden"
             aria-label="Menu"
-          > 
-          <Icon name="menu" />
+          >
+            <Icon name="menu" />
           </button>
         </div>
       </div>
 
-      {/* Mobile Search Overlay */}
       {isSearchOpen && (
         <div
           className="fixed inset-0 z-60 bg-black/60"
@@ -95,7 +111,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
                 className="rounded-full px-3 py-1 text-white/80 hover:text-white"
                 onClick={() => setIsSearchOpen(false)}
               >
-                <Icon name="close"/>
+                <Icon name="close" />
               </button>
             </div>
 
@@ -103,7 +119,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
               <SearchInput
                 placeholder="Search Movie"
                 autoFocus
-                onChange={(e) => onSearch?.(e.target.value)}
+                onChange={(e) => setQuerySearch(e.target.value)}
               />
             </div>
           </div>
@@ -127,28 +143,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
                 className="rounded-full px-3 py-1 text-white/80 hover:text-white"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <Icon name="close"/>
+                <Icon name="close" />
               </button>
             </div>
 
             <nav>
               <ul className="flex flex-col gap-4">
-                <li>
-                  <a
-                    href="/"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/favorite"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Favorites
-                  </a>
-                </li>
+                {navItems.map((item) => (
+                  <li key={item.href}>
+                    <a
+                      href={item.href}
+                      className="text-white/80 hover:text-white"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.label}
+                    </a>
+                  </li>))}
               </ul>
             </nav>
           </aside>

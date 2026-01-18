@@ -9,6 +9,7 @@ type Props = {
   hasMore?: boolean;
   isLoadingMore?: boolean;
   onLoadMore?: () => void;
+  onClickMovie? : (m:Movie) => void;
 };
 
 export const NowPlayingSection: React.FC<Props> = ({
@@ -17,6 +18,7 @@ export const NowPlayingSection: React.FC<Props> = ({
   hasMore,
   isLoadingMore,
   onLoadMore,
+  onClickMovie
 }) => {
   return (
     <section className="px-10 lg:px-35 ">
@@ -24,7 +26,7 @@ export const NowPlayingSection: React.FC<Props> = ({
 
       <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
         {movies.map((movie) => (
-          <MoviePosterCard key={movie.id} movie={movie} />
+          <MoviePosterCard key={movie.id} movie={movie} onClick={onClickMovie} />
         ))}
       </div>
 

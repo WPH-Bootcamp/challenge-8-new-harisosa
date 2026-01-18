@@ -33,11 +33,11 @@ export function useToggleFavorite() {
       if (!accountId) return;
 
       await qc.cancelQueries({
-        queryKey: movieQueryKeys.favorite.movies(accountId),
+        queryKey: movieQueryKeys.favorites.movies(accountId),
       });
 
       const previous = qc.getQueriesData<FavoriteMovieList>({
-        queryKey: movieQueryKeys.favorite.movies(accountId),
+        queryKey: movieQueryKeys.favorites.movies(accountId),
       });
 
       // Update semua cache favorites per page
@@ -80,7 +80,7 @@ export function useToggleFavorite() {
     onSettled: async () => {
       if (!accountId) return;
       await qc.invalidateQueries({
-        queryKey: movieQueryKeys.favorite.movies(accountId),
+        queryKey: movieQueryKeys.favorites.movies(accountId),
       });
     },
   });

@@ -20,7 +20,7 @@ export const PrimaryActions: React.FC<PrimaryActionsProps> = ({
     <div className="mt-3 flex items-center gap-3">
       {
         trailer && (
-          <TrailerButton onClick={onWatchTrailer}/>
+          <TrailerButton onClick={onWatchTrailer} className="lg:w-55 w-full"/>
         )
       }
 

@@ -4,18 +4,18 @@ import type { Movie } from "../../../lib/types/movie";
 import { RankBadge } from "../atoms/RankBadge";
 import { Rating } from "../atoms/Rating";
 
-type Props = {
+type MoviePosterCardProps = {
   movie: Movie;
   rank?: number; // 1-based
   onClick?: (movie: Movie) => void;
 };
 
-export const MoviePosterCard: React.FC<Props> = ({ movie, rank, onClick }) => {
+export const MoviePosterCard: React.FC<MoviePosterCardProps> = ({ movie, rank, onClick }) => {
   return (
     <div className={`w-54 min-h-78 shrink-0`} >
       <button
         type="button"
-        onClick={() => onClick?.(movie)}
+        onClick={() => onClick && onClick(movie)}
         className="group w-full text-left"
       >
         <div className="relative">

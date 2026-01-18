@@ -66,3 +66,9 @@ body {
   -ms-overflow-style: none;  /* IE & Edge */
   scrollbar-width: none;     /* Firefox */
 }
+
+
+.luminosity {
+  mix-blend-mode: luminosity;
+  mask-type:luminance
+}

@@ -4,18 +4,12 @@ import type { ListResponse } from "../types/response";
 
 export type GetMoviesParams = {
   page?: number;
-
-  // defaults
   language?: string;
   include_adult?: boolean;
   include_video?: boolean;
-
-  // common filters
   sort_by?: string;
   with_release_type?: string;
   without_genres?: string;
-
-  // TMDB "dot" filters
   "release_date.gte"?: string;
   "release_date.lte"?: string;
   "vote_count.gte"?: number;

@@ -4,7 +4,7 @@ import { getTrandingMovie } from "../api/getTrandingMovie";
 
 export const useGetTrandingMovies = () => {
   return useSuspenseQuery({
-    queryKey: movieQueryKeys.tranding,
+    queryKey: movieQueryKeys.trending,
     queryFn: () => getTrandingMovie(),
     staleTime: 1000 * 60 * 10,
   });

@@ -31,7 +31,7 @@ export const SearchInput: React.FC<Props> = ({
   return (
     <div
       className={
-        "relative flex items-center h-14 rounded-2xl bg-black/30 px-4 ring-1 ring-white/10 backdrop-blur " +
+        "relative flex items-center lg:h-14 h-11 rounded-2xl bg-black/30 px-4 ring-1 ring-white/10 backdrop-blur " +
         wrapperClassName
       }
     >

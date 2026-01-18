@@ -16,7 +16,7 @@ type FavoriteMovieProps = {
   disableTrailer?: boolean;
 };
 
-export const FavoriteMovie: React.FC<FavoriteMovieProps> = ({
+export const MovieItem: React.FC<FavoriteMovieProps> = ({
   posterUrl,
   title,
   ratingText,
@@ -28,7 +28,6 @@ export const FavoriteMovie: React.FC<FavoriteMovieProps> = ({
 }) => {
   return (
     <div className="py-6">
-      {/* Row utama */}
       <div className="flex items-start gap-4 sm:gap-6">
         <div className="shrink-0 w-26 sm:w-35">
           <PosterCard src={posterUrl} alt={title} />

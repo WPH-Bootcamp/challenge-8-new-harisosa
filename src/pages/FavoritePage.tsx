@@ -3,13 +3,13 @@ import { useFavoriteMovies } from "../lib/hook/useGetFavoritesMovie";
 import { useAuth } from "../lib/hook/useAuth";
 import { useToggleFavorite } from "../lib/hook/useToogleFavorite";
 import { useMovieTrailer } from "../lib/hook/useGetMovieTrailer";
-import { FavoritesList } from "../shared/ui/organisms/FavoriteList";
+import { MovieItemList } from "../shared/ui/organisms/MovieItemList";
 import { TrailerModal } from "../shared/ui/organisms/TrailerModel";
 import { getImageUrl } from "../lib/api/getImage";
 import { EmptyState } from "../shared/ui/molecules/EmptyState";
-import { Icon } from "../shared/ui/atoms/Icon";
 import { useNavigate } from "react-router-dom";
 import type { Movie } from "../lib/types/movie";
+import { MovieListSkeleton } from "../shared/ui/organisms/MovieItemListSkeleton";
 
 export const FavoritesPage: React.FC = () => {
     const navigate = useNavigate();
@@ -47,22 +47,20 @@ export const FavoritesPage: React.FC = () => {
             </div>
 
             {favQ.isLoading ? (
-                <div className=" max-w-5xl px-4 sm:px-6 md:px-8 py-10 text-white/60">
-                    Loading...
-                </div>
+                 <MovieListSkeleton count={10} />
             ) : favQ.isError ? (
                 <div className="max-w-5xl px-4 sm:px-6 md:px-8 py-10 text-white/60">
                     Failed to load favorites.
                 </div>
             ) : !favQ.data?.results.length ? (
                 <EmptyState
-                    icon={<Icon name="clip-path" className="luminosity w-38.5 h-42.5" />}
+                    icon={<img src="/not-found-favorite.svg" className="luminosity w-38.5 h-42.5" />}
                     title="Data Empty"
                     description="You don't have a favorite movie yet"
                     action={{ label: "Explore Movie", onClick: onExplore }}
                 />
             ) : (
-                <FavoritesList
+                <MovieItemList
                     items={movies}
                     getPosterUrl={(m) => getImageUrl(m.poster_path ?? '')}
                     onWatchTrailer={onWatchTrailer}

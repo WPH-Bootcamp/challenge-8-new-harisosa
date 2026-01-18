@@ -2,12 +2,16 @@ import { useMemo, useState } from "react";
 import { LogoBrand } from "./LogoBrand";
 import { SearchInput } from "../atoms/SearchInput";
 import { Icon } from "../atoms/Icon";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { Button } from "../atoms/Button";
 
 type NavItem = { label: string; href: string };
 
 export const Navbar: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const navItems: NavItem[] = useMemo(
     () => [
       { label: "Home", href: "/" },
@@ -16,40 +20,74 @@ export const Navbar: React.FC = () => {
     []
   );
 
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Desktop input state (keep as before)
   const [querySearch, setQuerySearch] = useState("");
 
-  const goToSearch = () => {
-    const q = querySearch.trim();
-    if (!q) return;
-    navigate(`/search?query=${encodeURIComponent(q)}`);
+  const isSearchRoute = location.pathname === "/search";
+  const searchQuery = (searchParams.get("query") ?? "")
+
+  const goToSearch = (query: string) => {
+    if (!query) return;
+    navigate(`/search?query=${encodeURIComponent(query)}`);
+  };
+
+  const setSearchQueryInUrl = (query: string) => {
+    if (!query) {
+      searchParams.delete("query");
+      setSearchParams(searchParams, { replace: true });
+      return;
+    }
+    setSearchParams({ query }, { replace: true });
   };
 
   return (
     <>
       <div className="flex items-center justify-between px-5 py-4 sm:px-10 sm:py-5 lg:px-35 h-full">
-        <div className="flex items-center gap-6">
-          <LogoBrand />
+        <div className="flex items-center gap-6 md:gap-6 w-full md:w-auto">
+          <div className="md:hidden w-full">
+            {isSearchRoute ? (
+              <div className="flex w-full items-center gap-3">
+                <Button
+                  variant="icon"
+                  onClick={() => navigate("/")}
+                  aria-label="Back"
+                  className="shrink-0"
+                >
+                  <Icon name="back" className="w-4 h-5" />
+                </Button>
 
-          <nav className="hidden md:block" aria-label="Main navigation">
-            <ul className="flex items-center gap-8">
-              {navItems.map((item) => (
-                <li key={item.href}>
-                  <a
-                    href={item.href}
-                    className="text-white/80 hover:text-white"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+                <div className="flex-1 min-w-0">
+                  <SearchInput
+                    placeholder="Search movie"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQueryInUrl(e.target.value)}
+                  />
+                </div>
+              </div>
+            ) : (
+              <LogoBrand />
+            )}
+          </div>
+
+          <div className="hidden md:flex items-center gap-6">
+            <LogoBrand />
+            <nav className="hidden md:block" aria-label="Main navigation">
+              <ul className="flex items-center gap-8">
+                {navItems.map((item) => (
+                  <li key={item.href}>
+                    <a href={item.href} className="text-white/80 hover:text-white">
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
         </div>
 
         <div className="flex items-center gap-3">
-
           <div className="hidden w-[320px] md:block">
             <SearchInput
               placeholder="Search movie"
@@ -58,73 +96,39 @@ export const Navbar: React.FC = () => {
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  goToSearch();
+                  goToSearch(querySearch);
                 }
               }}
             />
-
           </div>
 
-          <button
-            type="button"
-            onClick={() => setIsSearchOpen(true)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white/80 hover:bg-white/10 hover:text-white md:hidden"
-            aria-label="Search"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              className="h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M21 21l-4.3-4.3" />
-              <circle cx="11" cy="11" r="7" />
-            </svg>
-          </button>
+          {!isSearchRoute && (
+            <>
+              <Button
+                variant="icon"
+                onClick={() => {
+                  const q = querySearch.trim();
+                  if (q) goToSearch(q);
+                  else navigate("/search");
+                }}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white/80 hover:bg-white/10 hover:text-white md:hidden"
+                aria-label="Search"
+              >
+                <Icon name="search" className="w-6" />
+              </Button>
 
-          {/* Mobile: menu icon */}
-          <button
-            type="button"
-            onClick={() => setIsMenuOpen(true)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white/80 hover:bg-white/10 hover:text-white md:hidden"
-            aria-label="Menu"
-          >
-            <Icon name="menu" />
-          </button>
-        </div>
-      </div>
-
-      {isSearchOpen && (
-        <div
-          className="fixed inset-0 z-60 bg-black/60"
-          onClick={() => setIsSearchOpen(false)}
-        >
-          <div
-            className="mx-auto mt-16 w-[92%] max-w-md rounded-2xl bg-black/90 p-4 backdrop-blur"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between">
-              <div className="text-white font-semibold">Search</div>
               <button
                 type="button"
-                className="rounded-full px-3 py-1 text-white/80 hover:text-white"
-                onClick={() => setIsSearchOpen(false)}
+                onClick={() => setIsMenuOpen(true)}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white/80 hover:bg-white/10 hover:text-white md:hidden"
+                aria-label="Menu"
               >
-                <Icon name="close" />
+                <Icon name="menu" />
               </button>
-            </div>
-
-            <div className="mt-3">
-              <SearchInput
-                placeholder="Search Movie"
-                autoFocus
-                onChange={(e) => setQuerySearch(e.target.value)}
-              />
-            </div>
-          </div>
+            </>
+          )}
         </div>
-      )}
+      </div>
 
       {isMenuOpen && (
         <div
@@ -158,7 +162,8 @@ export const Navbar: React.FC = () => {
                     >
                       {item.label}
                     </a>
-                  </li>))}
+                  </li>
+                ))}
               </ul>
             </nav>
           </aside>

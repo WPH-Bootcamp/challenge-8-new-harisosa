@@ -17,14 +17,12 @@ export default function App() {
     <div className="min-h-screen bg-black">
 
       <header
-        className={
-          "fixed left-0 top-0 w-full z-50 h-16 lg:h-22.5 transition-all duration-300 " +
-          // MOBILE: always solid
-          "bg-black border-b border-white/10 " +
-          // DESKTOP behavior
-          (scrolled
-            ? "lg:bg-black/60 lg:backdrop-blur-md lg:shadow-[0_8px_30px_rgba(0,0,0,0.35)] "
-            : "lg:bg-transparent lg:border-transparent ")
+        className=
+          {` fixed left-0 top-0 w-full z-50 h-16 lg:h-22.5 transition-all duration-300
+        border-b border-white/10
+          ${scrolled
+            ? "bg-black/60 lg:backdrop-blur-md lg:shadow-[0_8px_30px_rgba(0,0,0,0.35)] "
+            : "lg:bg-transparent lg:border-transparent"}`
         }
       >
         <Navbar/>

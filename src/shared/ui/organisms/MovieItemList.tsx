@@ -1,8 +1,8 @@
 import React from "react";
-import { FavoriteMovie } from "./FavoriteMovie";
 import type { Movie } from "../../../lib/types/movie";
+import { MovieItem } from "./MovieItem";
 
-type FavoritesListProps = {
+type MovieItemListProps = {
   items: Movie[];
   getPosterUrl: (m: Movie) => string;
 
@@ -10,7 +10,7 @@ type FavoritesListProps = {
   onToggleFavorite: (movie: Movie) => void;
 };
 
-export const FavoritesList: React.FC<FavoritesListProps> = ({
+export const MovieItemList: React.FC<MovieItemListProps> = ({
   items,
   getPosterUrl,
   onWatchTrailer,
@@ -19,7 +19,7 @@ export const FavoritesList: React.FC<FavoritesListProps> = ({
   return (
     <div className="w-full max-w-5xl px-4 sm:px-6 md:px-8">
       {items.map((m) => (
-        <FavoriteMovie
+        <MovieItem
           key={m.id}
           posterUrl={getPosterUrl(m)}
           title={m.title}

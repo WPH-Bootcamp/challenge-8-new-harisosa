@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from "@tanstack/react-query"
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query"
 import { getSearchMovies } from "../api/getSearchMovie";
 import type { Movie } from "../types/movie";
 import { movieQueryKeys } from "../queries/queryKeys";
@@ -17,20 +17,17 @@ export function useInfiniteSearchMovies(opts: UseInfiniteSearchMoviesOptions) {
     language = "en-US",
     region,
     includeAdult = false,
-    minQueryLength = 2,
   } = opts;
 
   const trimmed = query.trim();
-  const enabled = trimmed.length >= minQueryLength;
 
-  const q = useInfiniteQuery({
+  const q = useSuspenseInfiniteQuery({
     queryKey:  movieQueryKeys.search.infinite({
     query,
     language,
     region,
     include_adult: includeAdult,
   }),
-    enabled,
     initialPageParam: 1,
     queryFn: ({ pageParam }) =>
       getSearchMovies({
@@ -58,6 +55,5 @@ export function useInfiniteSearchMovies(opts: UseInfiniteSearchMoviesOptions) {
     ...q,
     movies,
     totalResults,
-    enabled,
   };
 }

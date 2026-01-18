@@ -1,44 +1,39 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
-function App() {
-  const [count, setCount] = useState(0);
+import { Outlet } from "react-router-dom";
+import { Navbar } from "./shared/ui/molecules/NavBar";
+import { useEffect, useState } from "react";
+import { Footer } from "./shared/ui/organisms/Footer";
+
+export default function App() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <>
-      <div>
-        <a
-          href='https://vite.dev'
-          target='_blank'
-        >
-          <img
-            src={viteLogo}
-            className='logo'
-            alt='Vite logo'
-          />
-        </a>
-        <a
-          href='https://react.dev'
-          target='_blank'
-        >
-          <img
-            src={reactLogo}
-            className='logo react'
-            alt='React logo'
-          />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className='card'>
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className='read-the-docs'>Click on the Vite and React logos to learn more</p>
-    </>
+    <div className="min-h-screen bg-black">
+
+      <header
+        className=
+          {` fixed left-0 top-0 w-full z-50 h-16 lg:h-22.5 transition-all duration-300
+        border-b border-white/10
+          ${scrolled
+            ? "bg-black/60 lg:backdrop-blur-md lg:shadow-[0_8px_30px_rgba(0,0,0,0.35)] "
+            : "lg:bg-transparent lg:border-transparent"}`
+        }
+      >
+        <Navbar/>
+      </header>
+
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
   );
 }
 
-export default App;
+
